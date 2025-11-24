@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Plant } from './types'
-import PlantList from './PlantList'
+import PlantList from './components/PlantList'
 import PlantCard from './PlantCard'
 import PlantForm from './PlantForm'
 
@@ -37,7 +37,7 @@ export default function App({ plants }: AppProps) {
           <PlantList
             plants={plants}
             selectedId={selectedId}
-            onSelect={setSelectedId}
+            onSelect={p => setSelectedId(p ? p.id : null)}
           />
         </div>
 
@@ -48,7 +48,13 @@ export default function App({ plants }: AppProps) {
           {selectedPlant && (
             <div className="mt-4">
               <h4>Featured Plant</h4>
-              <PlantCard plant={selectedPlant} />
+              <PlantCard
+                plant={selectedPlant}
+                onDelete={id => {
+                  const p = plants.find(x => x.id === id)
+                  alert(p ? `Removed ${p.name}` : `Removed plant ${id}`)
+                }}
+              />
             </div>
           )}
         </div>

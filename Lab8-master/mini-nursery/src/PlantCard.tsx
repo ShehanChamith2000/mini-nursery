@@ -2,9 +2,10 @@ import type { Plant } from "./types"
 
 type PlantCardProps = {
   plant: Plant
+  onDelete?: (id: number) => void
 }
 
-export default function PlantCard({ plant }: PlantCardProps) {
+export default function PlantCard({ plant, onDelete }: PlantCardProps) {
   // Map light level → icons
   const lightIcons: Record<Plant["light"], string> = {
     Low: "🌙",
@@ -51,11 +52,20 @@ export default function PlantCard({ plant }: PlantCardProps) {
         </div>
 
         <div className="d-flex gap-2">
-          <button className="btn btn-outline-secondary" disabled>
-            View
+          <button
+            className="btn btn-outline-secondary"
+            onClick={() => alert(plant.name)}
+            type="button"
+          >
+            View Details
           </button>
-          <button className="btn btn-outline-success" disabled>
-            Buy
+
+          <button
+            className="btn btn-danger"
+            onClick={() => onDelete && onDelete(plant.id)}
+            type="button"
+          >
+            Remove
           </button>
         </div>
       </div>
